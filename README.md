@@ -6,7 +6,7 @@
 
 ---
 
-### Built using:
+### Using:
 
 - [Vite](https://vitejs.dev/)
 - [Bootstrap](https://getbootstrap.com/)
