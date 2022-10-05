@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import finnHub from "../apis/finnHub";
+import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 
 export const StockList = () => {
   const [watchList, setWatchList] = useState(["GOOGL", "MSFT", "AMZN"]);
@@ -29,6 +30,10 @@ export const StockList = () => {
     fetchData();
   }, []);
 
+  const updateColour = data => data > 0 ? "success" : "danger";
+
+  const renderIcon = data => data > 0 ? <BsFillCaretUpFill /> : <BsFillCaretDownFill />;
+
   return (
     <article>
       <table className="table hover mt-5">
@@ -46,16 +51,28 @@ export const StockList = () => {
         </thead>
         <tbody>
           {stock.map(stock => {
+            const {
+              o: open,	c: current,	d: change,	dp: changePercentage,	 h: dayHigh,	l: dayLow,	pc: prevClose,
+            } = stock.data;
+
+            const {symbol} = stock;
+
             return (
-              <tr className="table-row" key={stock.symbol}>
-                <th scope="row">{stock.symbol}</th>
-                <td>{stock.data.o}</td>
-                <td>{stock.data.c}</td>
-                <td>{stock.data.d}</td>
-                <td>{stock.data.dp}</td>
-                <td>{stock.data.h}</td>
-                <td>{stock.data.l}</td>
-                <td>{stock.data.pc}</td>
+              <tr className="table-row" key={symbol}>
+                <th scope="row">{symbol}</th>
+                <td>{open}</td>
+                <td>{current}</td>
+                <td className={`text-${updateColour(change)}`}>
+                  {change}
+                  {renderIcon(change)}
+                </td>
+                <td className={`text-${updateColour(changePercentage)}`}>
+                  {changePercentage}
+                  {renderIcon(changePercentage)}
+                </td>
+                <td>{dayHigh}</td>
+                <td>{dayLow}</td>
+                <td>{prevClose}</td>
               </tr>
             );
           })}
