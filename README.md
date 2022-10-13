@@ -11,3 +11,4 @@
 - [Vite](https://vitejs.dev/)
 - [Bootstrap](https://getbootstrap.com/)
 - [Finnhub Stock API](https://finnhub.io/)
+- [Apex Charts](https://apexcharts.com/)
