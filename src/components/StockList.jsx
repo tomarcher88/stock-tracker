@@ -1,12 +1,15 @@
 import { useState, useEffect, useContext } from "react";
+import { useNavigate } from 'react-router-dom';
 import { WatchListContext } from "../context/watchListContext";
 import finnHub from "../apis/finnHub";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 
 export const StockList = () => {
+  const navigate = useNavigate();
   const [stock, setStock] = useState([]);
   const {
-    watchList
+    watchList,
+    deleteStock
   } = useContext(WatchListContext);
   useEffect(() => {
     const fetchData = async () => {
@@ -37,6 +40,16 @@ export const StockList = () => {
 
   const renderIcon = data => data > 0 ? <BsFillCaretUpFill /> : <BsFillCaretDownFill />;
 
+  const handleStockSelect = (symbol) => {
+    navigate(`details/${symbol}`)
+    console.log('Clicked')
+  }
+
+  const handleRemove = (e, symbol) => {
+    e.stopPropagation();
+    deleteStock(symbol);
+  }
+
   return (
     <article>
       <table className="table hover mt-5">
@@ -50,6 +63,7 @@ export const StockList = () => {
             <th scope="col">High (Day)</th>
             <th scope="col">Low (Day)</th>
             <th scope="col">Prev. Close</th>
+            <th scope="col">Remove</th>
           </tr>
         </thead>
         <tbody>
@@ -61,7 +75,7 @@ export const StockList = () => {
             const {symbol} = stock;
 
             return (
-              <tr className="table-row" key={symbol}>
+              <tr className="table-row" key={symbol} onClick={() => handleStockSelect(symbol)} style={{cursor: 'pointer', }}>
                 <th scope="row">{symbol}</th>
                 <td>{open}</td>
                 <td>{current}</td>
@@ -76,6 +90,7 @@ export const StockList = () => {
                 <td>{dayHigh}</td>
                 <td>{dayLow}</td>
                 <td>{prevClose}</td>
+                <td><button className="btn btn-danger btn-sm ml-3 d-inline-block delete-btn" onClick={(e) => handleRemove(e, symbol)}>☠️</button></td>
               </tr>
             );
           })}

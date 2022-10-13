@@ -43,7 +43,10 @@ export const AutoComplete = () => {
         >
           {results.map((result) => {
             return (
-              <li className="dropdown-item" key={result.displaySymbol} onClick={() => addStock(result.symbol)}>
+              <li className="dropdown-item" key={result.displaySymbol} onClick={() => {
+                addStock(result.symbol)
+                setSearch("");
+                }}>
                 {result.description} ({result.symbol})
               </li>
             );
