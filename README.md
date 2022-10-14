@@ -12,3 +12,7 @@
 - [Bootstrap](https://getbootstrap.com/)
 - [Finnhub Stock API](https://finnhub.io/)
 - [Apex Charts](https://apexcharts.com/)
+
+---
+
+The project is "finished", however the tutorial CSS isn't very responsive, so needs further work to complete the styling for mobile.
